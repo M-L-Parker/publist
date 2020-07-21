@@ -6,11 +6,12 @@ import datetime
 import time
 from subprocess import call
 
-
+# Change these three lines:
 orcid='0000-0002-8466-7317'
 name_strings=['Parker, M. L.','Parker, Michael L.', 'Parker, M.', 'Parker, Michael']
 header_name="Michael Parker"
 
+# Query ADS for orcid, retrieve all papers and associated info
 query=ads.SearchQuery(orcid=orcid, rows=2000, \
                     fl=['id', 'bibcode', 'title', 'author', 'citation_count', 'year', 'page', 'volume', 'pub','pubdate'])
 print("\nQuerying ADS for orcid:",orcid)
@@ -27,18 +28,21 @@ print("Found",len(years),"records")
 print("Total citations:",sum(citations))
 print("h-index:",h_index(citations))
 
+# Load the preamble and write to output .tex file
 outfile=open('publication_list.tex','w')
 preamble_file=open('preamble.tex')
 for line in preamble_file:
     outfile.write(line)
 preamble_file.close()
 
-outfile.write("\\makeheading{%s -- Publication List}" % header_name)
 
+# Write intro lines to the publication list .tex file
+outfile.write("\\makeheading{%s -- Publication List}" % header_name)
 outfile.write("\\vspace{11pt}\\\\\nPublication list generated from ADS query for ORCID "+orcid)
 outfile.write("\n\nQuery executed "+now.strftime("%Y-%m-%d %H:%M") + " " +\
             time.tzname[time.localtime().tm_isdst])
-outfile.write("\n\n"+str(len(years))+" total records found, with "+str(sum(citations))+" total citations, h-index of "+str(h_index(citations))+".\\\\\n")
+outfile.write("\n\n"+str(len(years))+" total records found, with "+str(sum(citations))+" total citations, h-index of "+str(h_index(citations))+".")
+outfile.write("\n\nPublication list python script available from \\url{https://github.com/M-L-Parker/publist}\\\\\n")
 
 #Filter papers by year:
 papers=[]
@@ -55,9 +59,9 @@ for paper in query:
 
 
 for i,year in enumerate(years_set):
-    # print("Publications from "+str(year)+":")
     outfile.write("\n\\section{%s}" % str(year))
 
+    # Write first-author papers to .tex file
     if len(first_author_papers[i])>0:
         outfile.write("\n\\textbf{Lead author:}")
         outfile.write("\n\\begin{itemize}\n\\setlength\\itemsep{-0.5em}")
@@ -79,7 +83,7 @@ for i,year in enumerate(years_set):
 
         outfile.write("\n\\end{itemize}")
 
-
+    # Write co-author papers to .tex file
     if len(papers[i])>0:
         outfile.write("\n\\textbf{Co-author:}")
         outfile.write("\n\\begin{itemize}\n\\setlength\\itemsep{-0.50em}")
@@ -100,10 +104,6 @@ for i,year in enumerate(years_set):
                     outfile.write("\nCited by "+str(paper.citation_count)+"\\\\")
 
         outfile.write("\n\\end{itemize}")
-
-
-
-
 
 outfile.write("\n\\end{document}")
 outfile.close()

@@ -46,23 +46,7 @@ def special_characters(string):
     """read a string from ADS, usually author names, and replace special characters with the correct latex"""
     string=utf8tolatex(string)
     return string
-
-def step_plot(xdata,ydata,xerrors,axis=None,**kwargs):
-    new_x=[]
-    new_y=[]
-#     new_x.append(xdata[0]-xerrors[0])
-#     new_y.append(ydata[0])
-    for i in range(0,len(xdata)):
-        new_x.append(xdata[i]-xerrors[i])
-        new_x.append(xdata[i]+xerrors[i])
-        new_y.append(ydata[i])
-        new_y.append(ydata[i])
-#     new_x.append(xdata[-1]+xerrors[-1])
-#     new_y.append(ydata[-1])
-    if axis==None:
-        pl.plot(new_x,new_y,**kwargs)
-    else:
-        axis.plot(new_x,new_y,**kwargs)
+    
 
 def h_index(citations):
     sorted_citations = sorted(citations)[::-1]
