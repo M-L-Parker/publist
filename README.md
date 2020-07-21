@@ -6,6 +6,9 @@ Script to generate a publication list pdf from an ORCID. Queries ADS to find all
 ### Requirements:
 https://github.com/andycasey/ads
 
+Make sure to read the documentation for this, specifically the section on getting an ADS API key.
+
+
 <br />
 
 ### Generating publication list:
