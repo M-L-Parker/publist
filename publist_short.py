@@ -42,7 +42,7 @@ outfile.write("\\vspace{11pt}\\\\\nPublication list generated from ADS query for
 outfile.write("\n\nQuery executed "+now.strftime("%Y-%m-%d %H:%M") + " " +\
             time.tzname[time.localtime().tm_isdst])
 outfile.write("\n\n"+str(len(years))+" total records found, with "+str(sum(citations))+" total citations, h-index of "+str(h_index(citations))+".")
-outfile.write("\n\nPublication list python script available from \\url{https://github.com/M-L-Parker/publist}\\\\\n")
+outfile.write("\n\nPublication list python script available from \\href{https://github.com/M-L-Parker/publist}{github.com/M-L-Parker/publist}\\\\\n")
 
 #Filter papers by year:
 papers=[]
