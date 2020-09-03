@@ -77,7 +77,10 @@ for i,year in enumerate(years_set):
                 if paper.volume is not None:
                     outfile.write("\n"+paper.pub+", "+paper.volume+", "+paper.page[0]+"\\\\")
                 else:
-                    outfile.write("\n"+paper.pub+", "+paper.page[0]+"\\\\")
+                    if paper.page is not None:
+                        outfile.write("\n"+paper.pub+", "+paper.page[0]+"\\\\")
+                    else:
+                        outfile.write("\n"+paper.pub+"\\\\")
                 if paper.citation_count is not None and paper.citation_count != 0:
                     outfile.write("\nCited by "+str(paper.citation_count)+"\\\\")
 
